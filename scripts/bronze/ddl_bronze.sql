@@ -55,7 +55,7 @@ CREATE TABLE bronze.mis_campaign_spend (
 IF OBJECT_ID ('bronze.mis_campaigns','U') IS NOT NULL
     DROP TABLE bronze.mis_campaigns;
 CREATE TABLE bronze.mis_campaigns (
-    campaign_key            BIGINT,
+     campaign_key           BIGINT,
     campaign_id             VARCHAR(50),
     campaign_name           VARCHAR(255),
     campaign_type           VARCHAR(100),
@@ -71,6 +71,16 @@ CREATE TABLE bronze.mis_campaigns (
     creative_version        VARCHAR(50)
 );
 
+IF OBJECT_ID ('bronze.mis_channels','U') IS NOT NULL
+    DROP TABLE bronze.mis_channels;
+CREATE TABLE bronze.mis_channels (
+    channel_key         BIGINT,
+    channel_id          VARCHAR(50),
+    channel_name        VARCHAR(100),
+    channel_category    VARCHAR(50),
+    channel_type        VARCHAR(50),
+    "platform"          VARCHAR(100)
+);
 
 IF OBJECT_ID ('bronze.crm_customers','U') IS NOT NULL
     DROP TABLE bronze.crm_customers;
@@ -84,7 +94,8 @@ CREATE TABLE bronze.crm_customers (
     gender              VARCHAR(20),
     phone               VARCHAR(50),
     country             VARCHAR(100),
-    region              VARCHAR(100),
+    region              VARCHAR(50),
+    "state"             VARCHAR(100),
     city                VARCHAR(100),
     postal_code         VARCHAR(20),
     address_line1       VARCHAR(255),
@@ -96,8 +107,7 @@ CREATE TABLE bronze.crm_customers (
     sms_opt_in          BIT,
     push_opt_in         BIT,
     effective_date      DATE,
-    "expiry_date"       DATE,
-    is_current          BIT
+    "expiry_date"       DATE
 );
 
 IF OBJECT_ID ('bronze.crm_order_lines','U') IS NOT NULL
@@ -173,14 +183,16 @@ CREATE TABLE bronze.crm_products (
     genre               VARCHAR(100),
     sub_genre           VARCHAR(100),
     "language"          VARCHAR(50),
-    page_count          VARCHAR(50), -- will convert to INT later, since it's showing errors during data insertion
-    duration_minutes    VARCHAR(50), -- will convert to INT later, since it's showing errors during data insertion
+    page_count          VARCHAR(50), -- will convert to INT later on, since issues were found during data insertion
+    duration_minutes    VARCHAR(50),
     price               DECIMAL(10,2),
     cost                DECIMAL(10,2),
     in_stock            BIT,
     stock_quantity      INT,
     bestseller_flag     BIT,
-    new_release_flag    BIT
+    new_release_flag    BIT,
+    effective_date      DATE,
+    "expiry_date"       DATE
 );
 
 IF OBJECT_ID ('bronze.crm_web_sessions','U') IS NOT NULL
