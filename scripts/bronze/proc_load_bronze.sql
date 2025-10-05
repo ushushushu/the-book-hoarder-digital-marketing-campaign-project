@@ -184,6 +184,21 @@ BEGIN
 		SET @end_time = GETDATE()
 		PRINT '>> Load duration: ' + CAST(DATEDIFF(second,@start_time,@end_time) AS VARCHAR) + ' seconds';
 		PRINT '>> --------------------------------------------';
+
+		SET @start_time = GETDATE()
+		PRINT '>> Truncating the bronze.mis_channels table';
+		TRUNCATE TABLE bronze.mis_channels;
+		PRINT '>> Inserting data in the bronze.mis_channels table';
+		BULK INSERT bronze.mis_channels
+		FROM 'C:\Users\LENOVO\Downloads\the-book-hoarder-digital-marketing-campaign-project\mis\channels.csv'
+		WITH (
+			FIRSTROW = 2,
+			FIELDTERMINATOR = ',',
+			TABLOCK
+		);
+		SET @end_time = GETDATE()
+		PRINT '>> Load duration: ' + CAST(DATEDIFF(second,@start_time,@end_time) AS VARCHAR) + ' seconds';
+		PRINT '>> --------------------------------------------';
 		
 		SET @batch_end_time = GETDATE()
 		PRINT '=========================================================================================';
